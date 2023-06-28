@@ -26,7 +26,6 @@ db.getAllCustomers = () => {
     return new Promise((resolve, reject) => {
         con.query('SELECT customerId,customerRefNo,name,telephoneNumber,DATE_FORMAT(createdDate, "%y/%m/%d %r") AS createdDate,DATE_FORMAT(updatedDate, "%y/%m/%d %r") AS updatedDate,STATUS,email,address,areaCode from customer ', (error, sales) => {
           //  con.release()
-          console.log(sales)
             if (error) {
                 return reject(error);
             }

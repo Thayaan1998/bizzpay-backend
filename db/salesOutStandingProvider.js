@@ -50,4 +50,41 @@ db.insertSalesOutstanding = (sales) =>{
     });
 };
 
+db.getDetailOutstanding = (salesSummary) =>{
+
+    var sql="SELECT invoiceNo,DATE_FORMAT(invoiceDate,'%y/%m/%d')as invoiceDate,"
+
+    if(salesSummary.reportType=="Summary"){
+        sql=sql+ " sum(balance) as balance,";   
+
+    }else{
+        sql=sql+ "  balance,";
+    }
+
+    
+    sql=sql+  "customerRefNo,DATEDIFF(CURRENT_DATE, invoiceDate) as datediff FROM `salesOutstanding` "
+   
+    if(salesSummary.dateType!=""){
+        sql=sql+" where  "+salesSummary.dateType;
+    }
+    
+    if(salesSummary.reportType=="Summary"){
+        sql=sql+ " group by customerRefNo";   
+
+    }
+
+
+    sql=sql+ " order by invoiceDate desc";   
+    return new Promise((resolve, reject)=>{
+        con.query(sql,  (error, salesSummary)=>{
+           
+            if(error){
+                return reject(error);
+            }
+            return resolve(salesSummary);
+        });
+    });
+};
+
+
 module.exports = db;    

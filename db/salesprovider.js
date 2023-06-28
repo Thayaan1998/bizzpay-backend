@@ -95,6 +95,36 @@ db.deleteSales = (sales) =>{
         });
     });
 };
+
+db.getDateByWithoutRangeSales = (salesSummary) =>{
+
+    var sql="select invoiceNo,DATE_FORMAT(invoiceDate,'%y/%m/%d')as invoiceDate,customer.name as customerName,masterconfigaration.name as salesperson,total from sales"+
+    " inner join customer on customer.customerId=sales.customerId inner join masterconfigaration on masterconfigaration.masterConfigarationId=sales.masterConfigarationId ";   
+    
+    if(salesSummary.dateType!=""&& salesSummary.masterConfigarationId!=""){
+        sql=sql+" where masterconfigaration.masterConfigarationId="+salesSummary.masterConfigarationId+" and  "+salesSummary.dateType;
+
+    }else
+    if(salesSummary.dateType!=""){
+        sql=sql+" where  "+salesSummary.dateType;
+    }else if(salesSummary.masterConfigarationId!=""){
+        sql=sql+" where masterconfigaration.masterConfigarationId="+salesSummary.masterConfigarationId;
+    }
+
+    return new Promise((resolve, reject)=>{
+        con.query(sql,  (error, salesSummary)=>{
+           
+            if(error){
+                return reject(error);
+            }
+            return resolve(salesSummary);
+        });
+    });
+};
+
+
+
+
  
   
 module.exports = db;

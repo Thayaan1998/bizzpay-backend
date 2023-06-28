@@ -436,6 +436,48 @@ app.post('/api/getPericularChequedetail', async (req, res) => {
 });
 
 
+app.post('/api/getDateByWithoutRangeSales', async (req, res) => {
+    try {
+        const salesDetails = await salesprovider.getDateByWithoutRangeSales(req.body);
+
+        res.status(200).json(salesDetails);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+
+});
+
+
+app.post('/api/getBillWiseReciptWithDateRange', async (req, res) => {
+    try {
+        const salesDetails = await billwisereciptProvider.getBillWiseReciptWithDateRange(req.body);
+
+        res.status(200).json(salesDetails);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+
+});
+
+app.post('/api/getDetailOutstanding', async (req, res) => {
+    try {
+        const salesDetails = await salesOutStandingProvider.getDetailOutstanding(req.body);
+
+        res.status(200).json(salesDetails);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+
+});
+
+
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on Port ${port}....`))

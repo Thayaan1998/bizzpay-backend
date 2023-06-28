@@ -75,7 +75,7 @@ db.getAllChequeHeader = () =>{
 
 db.getPericularChequedetail = (billwisereceiptheader) =>{
     return new Promise((resolve, reject)=>{
-        con.query("SELECT *   from billwisereceiptdetail where chequeNo = '"+billwisereceiptheader.chequeNo+"'",  (error, billwiseRecipts)=>{
+        con.query("SELECT *   from billwisereceiptheader where chequeNo = '"+billwisereceiptheader.chequeNo+"'",  (error, billwiseRecipts)=>{
             if(error){
                 return reject(error);
             }
@@ -117,5 +117,34 @@ db.insertChequeDetail = (billwisereceiptDetail) =>{
         });
     });
 };
+
+
+db.getBillWiseReciptWithDateRange = (salesSummary) =>{
+
+    var sql="select receiptNo ,DATE_FORMAT(receiptDate,'%y/%m/%d')as receiptDate,customer.name as customerName,masterconfigaration.name as bank,paymentId,chequeNo,amount from billwisereceiptheader"+
+    " inner join customer on customer.customerId=billwisereceiptheader.customerId "+
+    " inner join masterconfigaration on masterconfigaration.masterConfigarationId=billwisereceiptheader.bankId  ";   
+    
+    if(salesSummary.dateType!=""&& salesSummary.paymentId!=""){
+        sql=sql+" where billwisereceiptheader.paymentId="+salesSummary.paymentId+" and  "+salesSummary.dateType;
+
+    }else
+    if(salesSummary.dateType!=""){
+        sql=sql+" where  "+salesSummary.dateType;
+    }else if(salesSummary.paymentId!=""){
+        sql=sql+" where  billwisereceiptheader.paymentId="+salesSummary.paymentId;
+    }
+
+    return new Promise((resolve, reject)=>{
+        con.query(sql,  (error, salesSummary)=>{
+           
+            if(error){
+                return reject(error);
+            }
+            return resolve(salesSummary);
+        });
+    });
+};
+
 
 module.exports = db;
