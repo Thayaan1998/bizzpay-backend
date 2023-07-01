@@ -8,7 +8,7 @@ let db = {};
 
 db.getAllMasterCofigarations = () =>{
     return new Promise((resolve, reject)=>{
-        con.query('SELECT masterConfigarationId,code,type,name,description,DATE_FORMAT(createdDate, "%y/%m/%d %r") AS createdDate,DATE_FORMAT(updatedDate, "%y/%m/%d %r") AS updatedDate,status from masterconfigaration ',  (error, masterconfigaration)=>{
+        con.query('SELECT masterConfigarationId,code,type,name,description,DATE_FORMAT(createdDate, "%d/%m/%y %r") AS createdDate,DATE_FORMAT(updatedDate, "%d/%m/%y %r") AS updatedDate,status from masterconfigaration ',  (error, masterconfigaration)=>{
             if(error){
                 return reject(error);
             }
@@ -74,7 +74,7 @@ db.deleteMasterConfigaration = (masterconfigaration) =>{
 
 db.getSalesPerson = () =>{
     return new Promise((resolve, reject)=>{
-        con.query("SELECT masterConfigarationId,code,type,name as label,description,DATE_FORMAT(createdDate, '%y/%m/%d %r') AS createdDate,DATE_FORMAT(updatedDate, '%y/%m/%d %r') AS updatedDate,status from masterconfigaration where type='Sales Person' and status='available'   ",  (error, masterconfigaration)=>{
+        con.query("SELECT masterConfigarationId,code,type,name as label,description,DATE_FORMAT(createdDate, '%d/%m/%y %r') AS createdDate,DATE_FORMAT(updatedDate, '%d/%m/%y %r') AS updatedDate,status from masterconfigaration where type='Sales Person' and status='available'   ",  (error, masterconfigaration)=>{
             if(error){
                 return reject(error);
             }
@@ -96,7 +96,7 @@ db.getPerticularSalesPerson = (code) =>{
 
 db.getBanks = () =>{
     return new Promise((resolve, reject)=>{
-        con.query("SELECT masterConfigarationId,code,type,name,description,DATE_FORMAT(createdDate, '%y/%m/%d %r') AS createdDate,DATE_FORMAT(updatedDate, '%y/%m/%d %r') AS updatedDate,status from masterconfigaration where type='Bank Name' and status='available'   ",  (error, masterconfigaration)=>{
+        con.query("SELECT masterConfigarationId,code,type,name,description,DATE_FORMAT(createdDate, '%d/%m/%y %r') AS createdDate,DATE_FORMAT(updatedDate, '%d/%m/%y %r') AS updatedDate,status from masterconfigaration where type='Bank Name' and status='available'   ",  (error, masterconfigaration)=>{
             if(error){
                 return reject(error);
             }
@@ -107,7 +107,7 @@ db.getBanks = () =>{
 
 db.paymentTypes = () =>{
     return new Promise((resolve, reject)=>{
-        con.query("SELECT masterConfigarationId,code,type,name,description,DATE_FORMAT(createdDate, '%y/%m/%d %r') AS createdDate,DATE_FORMAT(updatedDate, '%y/%m/%d %r') AS updatedDate,status from masterconfigaration where type='Payment Type' and status='available'   ",  (error, masterconfigaration)=>{
+        con.query("SELECT masterConfigarationId,code,type,name,description,DATE_FORMAT(createdDate, '%d/%m/%y %r') AS createdDate,DATE_FORMAT(updatedDate, '%d/%m/%y %r') AS updatedDate,status from masterconfigaration where type='Payment Type' and status='available'   ",  (error, masterconfigaration)=>{
             if(error){
                 return reject(error);
             }

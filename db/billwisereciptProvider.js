@@ -5,7 +5,7 @@ let db = {};
 
 db.getAllBillWiseReceiptHeader = () =>{
     return new Promise((resolve, reject)=>{
-        con.query('SELECT billwisereceiptheader.*,DATE_FORMAT(receiptDate, "%y/%m/%d") as receiptDate1,customer.name as customerName, masterconfigaration.name as bankName FROM billwisereceiptheader INNER JOIN customer on customer.customerId=billwisereceiptheader.customerId INNER JOIN masterconfigaration on masterconfigaration.masterConfigarationId=billwisereceiptheader.bankId order by receiptDate desc;',  (error, billwiseRecipts)=>{
+        con.query('SELECT billwisereceiptheader.*,DATE_FORMAT(receiptDate, "%d/%m/%y") as receiptDate1,customer.name as customerName, masterconfigaration.name as bankName FROM billwisereceiptheader INNER JOIN customer on customer.customerId=billwisereceiptheader.customerId INNER JOIN masterconfigaration on masterconfigaration.masterConfigarationId=billwisereceiptheader.bankId order by receiptDate desc;',  (error, billwiseRecipts)=>{
             if(error){
                 return reject(error);
             }
@@ -64,7 +64,7 @@ db.insertBillWiseReceiptDetail = (billwisereceiptDetail) =>{
 
 db.getAllChequeHeader = () =>{
     return new Promise((resolve, reject)=>{
-        con.query('SELECT chequeheader.*,DATE_FORMAT(receiptDate, "%y/%m/%d") as receiptDate1,customer.name as customerName, masterconfigaration.name as bankName FROM chequeheader INNER JOIN customer on customer.customerId=chequeheader.customerId INNER JOIN masterconfigaration on masterconfigaration.masterConfigarationId=chequeheader.bankId order by receiptDate desc;',  (error, billwiseRecipts)=>{
+        con.query('SELECT chequeheader.*,DATE_FORMAT(receiptDate, "%d/%m/%y") as receiptDate1,customer.name as customerName, masterconfigaration.name as bankName FROM chequeheader INNER JOIN customer on customer.customerId=chequeheader.customerId INNER JOIN masterconfigaration on masterconfigaration.masterConfigarationId=chequeheader.bankId order by receiptDate desc;',  (error, billwiseRecipts)=>{
             if(error){
                 return reject(error);
             }
@@ -121,7 +121,7 @@ db.insertChequeDetail = (billwisereceiptDetail) =>{
 
 db.getBillWiseReciptWithDateRange = (salesSummary) =>{
 
-    var sql="select receiptNo ,DATE_FORMAT(receiptDate,'%y/%m/%d')as receiptDate,customer.name as customerName,masterconfigaration.name as bank,paymentId,chequeNo,amount from billwisereceiptheader"+
+    var sql="select receiptNo ,DATE_FORMAT(receiptDate,'%d/%m/%y')as receiptDate,customer.name as customerName,masterconfigaration.name as bank,paymentId,chequeNo,amount from billwisereceiptheader"+
     " inner join customer on customer.customerId=billwisereceiptheader.customerId "+
     " inner join masterconfigaration on masterconfigaration.masterConfigarationId=billwisereceiptheader.bankId  ";   
     

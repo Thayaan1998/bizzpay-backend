@@ -268,7 +268,7 @@ app.post('/api/deleteSales', async (req, res) => {
 
 app.post('/api/getSalesOutstandingbyCustomerCode', async (req, res) => {
     try {
-        const sales = await salesOutStandingProvider.geSalesOutandingByCustomerId(req.body.customerRefNo)
+        const sales = await salesOutStandingProvider.geSalesOutandingByCustomerId(req.body.receiptNo)
         res.status(200).json(sales);
     } catch (e) {
         console.log(e);
@@ -277,6 +277,16 @@ app.post('/api/getSalesOutstandingbyCustomerCode', async (req, res) => {
 
 });
 
+app.post('/api/getSalesOutstandingbyCustomerCode1', async (req, res) => {
+    try {
+        const sales = await salesOutStandingProvider.geSalesOutandingByCustomerId1(req.body.customerRefNo)
+        res.status(200).json(sales);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+});
 app.get('/api/getBanks', async (req, res) => {
     try {
         const sales = await masterConfigarationProvider.getBanks();

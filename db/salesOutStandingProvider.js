@@ -4,9 +4,22 @@ var con = connection
 
 let db = {};
 
+db.geSalesOutandingByCustomerId1 = (customerRefNo) =>{
+    return new Promise((resolve, reject)=>{
+        con.query("SELECT *,DATE_FORMAT(invoiceDate, '%d/%m/%y') as invoiceDate1,receiptAmount FROM salesOutstanding where customerRefNo = '"+customerRefNo+"'",  (error, salesoutstanding)=>{
+            if(error){
+                return reject(error);
+            }
+            return resolve(salesoutstanding);
+        });
+    });
+};
+
 db.geSalesOutandingByCustomerId = (customerRefNo) =>{
     return new Promise((resolve, reject)=>{
-        con.query("SELECT *,DATE_FORMAT(invoiceDate, '%y/%m/%d') as invoiceDate1,receiptAmount FROM salesOutstanding where customerRefNo = '"+customerRefNo+"'",  (error, salesoutstanding)=>{
+        con.query("SELECT *,DATE_FORMAT(invoiceDate, '%d/%m/%y') as invoiceDate1,receiptAmount FROM salesOutstanding "+
+        "inner join billwisereceiptdetail on billwisereceiptdetail.invoiceNo=salesOutstanding.invoiceNo " +
+        "where billwisereceiptdetail.receiptNo = '"+customerRefNo+"'",  (error, salesoutstanding)=>{
             if(error){
                 return reject(error);
             }
@@ -52,7 +65,7 @@ db.insertSalesOutstanding = (sales) =>{
 
 db.getDetailOutstanding = (salesSummary) =>{
 
-    var sql="SELECT invoiceNo,DATE_FORMAT(invoiceDate,'%y/%m/%d')as invoiceDate,"
+    var sql="SELECT invoiceNo,DATE_FORMAT(invoiceDate,'%d/%m/%y')as invoiceDate,"
 
     if(salesSummary.reportType=="Summary"){
         sql=sql+ " sum(balance) as balance,";   
@@ -63,10 +76,6 @@ db.getDetailOutstanding = (salesSummary) =>{
 
     
     sql=sql+  "customerRefNo,DATEDIFF(CURRENT_DATE, invoiceDate) as datediff FROM `salesOutstanding` "
-   
-    if(salesSummary.dateType!=""){
-        sql=sql+" where  "+salesSummary.dateType;
-    }
     
     if(salesSummary.reportType=="Summary"){
         sql=sql+ " group by customerRefNo";   

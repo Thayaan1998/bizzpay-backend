@@ -6,10 +6,11 @@ let db = {};
 
 db.getAllSales = () =>{
     return new Promise((resolve, reject)=>{
-        con.query('SELECT *,DATE_FORMAT(invoiceDate, "%y/%m/%d") as invoiceDate1,customer.name as customerName,masterconfigaration.name as salesperson FROM `sales` INNER join customer on customer.customerId=sales.customerId INNER join masterconfigaration on masterconfigaration.masterConfigarationId=sales.masterConfigarationId',  (error, customer)=>{
+        con.query('SELECT *,DATE_FORMAT(invoiceDate, "%d/%m/%y") as invoiceDate1,customer.name as customerName,masterconfigaration.name as salesperson FROM `sales` left join customer on customer.customerId=sales.customerId left join masterconfigaration on masterconfigaration.masterConfigarationId=sales.masterConfigarationId',  (error, customer)=>{
             if(error){
                 return reject(error);
             }
+            // console.log(customer)
             return resolve(customer);
         });
     });
@@ -31,9 +32,11 @@ db.insertSales = (sales) =>{
     const insertquery="INSERT INTO sales (invoiceNo,customerId,masterConfigarationId,invoiceDate,total ) VALUES" 
     +"('"+sales.invoiceNo+"',"+sales.customerId +","+sales.masterConfigarationId +",'"+sales.invoiceDate+"',"+sales.total+");";
 
+    console.log(insertquery)
    
     return new Promise((resolve, reject)=>{
         con.query(insertquery,  (error, customer)=>{
+            con
             if(error){
                 return reject("error");
             }
@@ -47,6 +50,7 @@ db.insertImportSales = (sales,customerId,masterConfigarationId) =>{
     const insertquery="INSERT INTO sales (invoiceNo,customerId,masterConfigarationId,invoiceDate,total ) VALUES" 
     +"('"+sales.invoiceNo+"',"+customerId+","+masterConfigarationId+",'"+sales.invoiceDate+"',"+sales.total+");";
 
+    console.log(insertquery);
    
     return new Promise((resolve, reject)=>{
         con.query(insertquery,  (error, customer)=>{
@@ -98,7 +102,7 @@ db.deleteSales = (sales) =>{
 
 db.getDateByWithoutRangeSales = (salesSummary) =>{
 
-    var sql="select invoiceNo,DATE_FORMAT(invoiceDate,'%y/%m/%d')as invoiceDate,customer.name as customerName,masterconfigaration.name as salesperson,total from sales"+
+    var sql="select invoiceNo,DATE_FORMAT(invoiceDate,'%d/%m/%y')as invoiceDate,customer.name as customerName,masterconfigaration.name as salesperson,total from sales"+
     " inner join customer on customer.customerId=sales.customerId inner join masterconfigaration on masterconfigaration.masterConfigarationId=sales.masterConfigarationId ";   
     
     if(salesSummary.dateType!=""&& salesSummary.masterConfigarationId!=""){

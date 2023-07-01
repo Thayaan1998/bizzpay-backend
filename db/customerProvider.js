@@ -24,7 +24,7 @@ db.getPerticularCustomer = (customerRefNo) => {
 
 db.getAllCustomers = () => {
     return new Promise((resolve, reject) => {
-        con.query('SELECT customerId,customerRefNo,name,telephoneNumber,DATE_FORMAT(createdDate, "%y/%m/%d %r") AS createdDate,DATE_FORMAT(updatedDate, "%y/%m/%d %r") AS updatedDate,STATUS,email,address,areaCode from customer ', (error, sales) => {
+        con.query('SELECT customerId,customerRefNo,name,telephoneNumber,DATE_FORMAT(createdDate, "%d/%m/%y %r") AS createdDate,DATE_FORMAT(updatedDate, "%d/%m/%y %r") AS updatedDate,STATUS,email,address,areaCode from customer ', (error, sales) => {
           //  con.release()
             if (error) {
                 return reject(error);
@@ -93,7 +93,7 @@ db.deleteCustomers = (customer) => {
 
 db.getActiveCustomers = () => {
     return new Promise((resolve, reject) => {
-        con.query("SELECT customerId,customerRefNo ,name as label,telephoneNumber,DATE_FORMAT(createdDate, '%y/%m/%d %r') AS createdDate,DATE_FORMAT(updatedDate, '%y/%m/%d %r') AS updatedDate,STATUS,email,address from customer where STATUS='available' ", (error, customer) => {
+        con.query("SELECT customerId,customerRefNo ,name as label,telephoneNumber,DATE_FORMAT(createdDate, '%d/%m/%y %r') AS createdDate,DATE_FORMAT(updatedDate, '%d/%m/%y %r') AS updatedDate,STATUS,email,address from customer where STATUS='available' order by label asc ", (error, customer) => {
             if (error) {
                 return reject(error);
             }
