@@ -222,7 +222,7 @@ app.post('/api/insertImportSales', async (req, res) => {
         const sales = await salesprovider.getPerticularSale(req.body.invoiceNo)
 
         if (sales.length == 0) {
-            const sale = await salesprovider.insertImportSales(req.body, customers[0].customerId, salesPerson[0].masterConfigarationId)
+            const sale = await salesprovider.insertImportSales(req.body, customers[0].customerId,salesPerson==null? salesPerson[0].masterConfigarationId:null)
             const salesOut=await salesOutStandingProvider.insertSalesOutstanding(req.body);
             res.status(200).json(sale);
 

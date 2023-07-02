@@ -20,6 +20,8 @@ db.geSalesOutandingByCustomerId = (customerRefNo) =>{
         con.query("SELECT *,DATE_FORMAT(invoiceDate, '%d/%m/%y') as invoiceDate1,receiptAmount FROM salesOutstanding "+
         "inner join billwisereceiptdetail on billwisereceiptdetail.invoiceNo=salesOutstanding.invoiceNo " +
         "where billwisereceiptdetail.receiptNo = '"+customerRefNo+"'",  (error, salesoutstanding)=>{
+
+           
             if(error){
                 return reject(error);
             }
