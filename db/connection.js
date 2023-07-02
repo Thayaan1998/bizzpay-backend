@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 var con = mysql.createPool({
-    connectionLimit : 10,
+    connectionLimit : 50,
     host: "sql12.freesqldatabase.com",
     user: "sql12628680",
     password: "VtG4xBRXRY",

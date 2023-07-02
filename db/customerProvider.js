@@ -39,11 +39,9 @@ db.getAllCustomers = () => {
         con.getConnection(function (err, connection) {
             connection.query('SELECT customerId,customerRefNo,name,telephoneNumber,DATE_FORMAT(createdDate, "%d/%m/%y %r") AS createdDate,DATE_FORMAT(updatedDate, "%d/%m/%y %r") AS updatedDate,STATUS,email,address,areaCode from customer ', function (err, rows) {
 
-                console.log(con._freeConnections.indexOf(connection)); // -1
 
                 connection.release();
 
-                console.log(con._freeConnections.indexOf(connection)); // 0
                 if (err) {
                     return reject(err);
                 }
@@ -78,9 +76,7 @@ db.insertCustomers = (customer) => {
             connection.query(insertquery, function (err1, rows) {
 
                 // console.log(); // -1
-                con._freeConnections.indexOf(connection)
                 connection.release();
-                con._freeConnections.indexOf(connection)
                 // console.log(); // 0
                 if (err1) {
                     return reject(err1);
@@ -117,9 +113,7 @@ db.updateCustomers = (customer) => {
             connection.query(updatequery, function (err1, rows) {
 
                 // console.log(); // -1
-                con._freeConnections.indexOf(connection)
                 connection.release();
-                con._freeConnections.indexOf(connection)
                 // console.log(); // 0
                 if (err1) {
                     return reject(err1);
@@ -152,9 +146,7 @@ db.deleteCustomers = (customer) => {
             connection.query(deleteQuery, function (err1, rows) {
 
                 // console.log(); // -1
-                con._freeConnections.indexOf(connection)
                 connection.release();
-                con._freeConnections.indexOf(connection)
                 // console.log(); // 0
                 if (err1) {
                     return reject(err1);
@@ -182,9 +174,7 @@ db.getActiveCustomers = () => {
             connection.query("SELECT customerId,customerRefNo ,name as label,telephoneNumber,DATE_FORMAT(createdDate, '%d/%m/%y %r') AS createdDate,DATE_FORMAT(updatedDate, '%d/%m/%y %r') AS updatedDate,STATUS,email,address from customer where STATUS='available' order by label asc ", function (err1, rows) {
 
                 // console.log(); // -1
-                con._freeConnections.indexOf(connection)
                 connection.release();
-                con._freeConnections.indexOf(connection)
                 // console.log(); // 0
                 if (err1) {
                     return reject(err1);
@@ -210,9 +200,7 @@ db.getAutoincrementForCustomer = () => {
         con.getConnection(function (err, connection) {
             connection.query("SELECT AUTO_INCREMENT FROM information_schema.tables WHERE table_name = 'customer'; ", function (err1, rows) {
 
-                con._freeConnections.indexOf(connection)
                 connection.release();
-                con._freeConnections.indexOf(connection)
                 if (err1) {
                     return reject(err1);
                 }

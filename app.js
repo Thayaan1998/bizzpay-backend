@@ -243,6 +243,9 @@ app.post('/api/updateSales', async (req, res) => {
     try {
         const staus = await salesprovider.updateSales(req.body);
 
+        const staus1 = await salesOutStandingProvider.updateSalesOutstanding2(req.body);
+
+
         res.status(200).json(staus);
     } catch (e) {
         console.log(e);
