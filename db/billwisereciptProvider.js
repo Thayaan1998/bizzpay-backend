@@ -225,8 +225,8 @@ db.insertChequeDetail = (billwisereceiptDetail) =>{
 db.getBillWiseReciptWithDateRange = (salesSummary) =>{
 
     var sql="select receiptNo ,DATE_FORMAT(receiptDate,'%d/%m/%y')as receiptDate,customer.name as customerName,masterconfigaration.name as bank,paymentId,chequeNo,amount from billwisereceiptheader"+
-    " inner join customer on customer.customerId=billwisereceiptheader.customerId "+
-    " inner join masterconfigaration on masterconfigaration.masterConfigarationId=billwisereceiptheader.bankId  ";   
+    " left join customer on customer.customerId=billwisereceiptheader.customerId "+
+    " left join masterconfigaration on masterconfigaration.masterConfigarationId=billwisereceiptheader.bankId  ";   
     
     if(salesSummary.dateType!=""&& salesSummary.paymentId!=""){
         sql=sql+" where billwisereceiptheader.paymentId="+salesSummary.paymentId+" and  "+salesSummary.dateType;
